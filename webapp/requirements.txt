@@ -6,3 +6,4 @@ distribute
 wsgiref
 tensorflow
 keras
+pillow

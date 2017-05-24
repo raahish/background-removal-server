@@ -1,14 +1,13 @@
-import base64
-
 import io
+
 from flask import Flask, jsonify, request
 import keras
 from PIL import Image
 from flask import send_file
-from io import BytesIO
 from keras.models import model_from_json
 import numpy as np
-from scipy.misc import imresize, imsave
+from scipy.misc import imresize
+
 import tensorflow as tf
 
 json_file = open('./model/model.json', 'r')
@@ -51,8 +50,13 @@ def predict():
         prediction = prediction.reshape((-1,224,224))
 
         mask = prediction[0]
-        imsave('out.jpg', color_label(mask))
-        return send_file(prediction[0])
+        mask = color_label(mask)
+        mask = Image.fromarray(np.uint8(mask))
+
+        byte_io = io.BytesIO()
+        mask.save(byte_io, 'PNG')
+        byte_io.seek(0)
+        return send_file(byte_io, mimetype='image/png')
         # return jsonify({'prediction': repr(prediction)})
     # return jsonify({'prediction': None})
 
