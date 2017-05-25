@@ -1,3 +1,4 @@
+print("Starting app.py")
 import io
 
 from flask import Flask, jsonify, request
@@ -22,11 +23,6 @@ def predict():
     mask.save(byte_io, 'PNG')
     byte_io.seek(0)
     return send_file(byte_io, mimetype='image/png')
-
-    # byte_io = request.files['file']
-    # return send_file(byte_io, mimetype='image/png')
-
-    # return jsonify({'prediction': None})
 
 @app.route('/')
 def homepage():
