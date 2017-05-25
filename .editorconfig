@@ -1,0 +1,10 @@
+# 4 space indentation
+[*.py]
+indent_style = space
+indent_size = 4
+
+
+# 4 space indentation
+[*.slim]
+indent_style = space
+indent_size = 2

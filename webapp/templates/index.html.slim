@@ -1,0 +1,20 @@
+-inherit layout.html.slim
+- block body
+  .container
+    .text-center
+      img#preview.hidden  src="#" style="max-width: 100%;"
+      #progress-wrp
+        .progress-bar
+        .status
+    form#img-form accept-charset="UTF-8" action="/predict" method="post" novalidate="novalidate"
+      input name="utf8" type="hidden" value="✓"
+      /input name="authenticity_token" type="hidden" value="XXXX=="
+      .form-group.string.required.session_type_title
+        label.control-label.string.required for="image"  File
+        input#img-form-img.form-control.required name="image" type="file"
+      .form-actions
+        input.btn.btn-primary data-disable-with="Create" name="commit" type="submit" value="Remove background"
+
+
+
+- block javascripts

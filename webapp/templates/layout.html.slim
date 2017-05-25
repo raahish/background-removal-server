@@ -1,0 +1,70 @@
+doctype html
+/!if lt IE 7 ]><html class="ie ie6" lang="en">
+/!if IE 7 ]><html class="ie ie7" lang="en">
+/!if IE 8 ]><html class="ie ie8" lang="en">
+/! [if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]
+head
+  meta charset='utf-8'
+  title= "%s - %s" % (config['SITE_NAME'], config['TAGLINE'])
+  /meta name='description' content=(content_for?(:description) ? yield(:description) : Settings.site_description)
+  /meta name='keywords' content=(content_for?(:keywords) ? yield(:keywords) : Settings.site_keywords)
+
+  /meta name='google-site-verification' content=Settings.google_site_verification
+
+  /meta property='fb:app_id' content=Settings.facebook_app_id
+  /meta property='og:site_name' content=Settings.site_name
+  /meta property='og:title' content=(content_for?(:og_title) ? yield(:og_title) : "#{Settings.site_name} - #{Settings.tagline}")
+  /meta property='og:description' content=(content_for?(:description) ? yield(:description) : Settings.site_description)
+  /meta property='og:image' content=(content_for?(:og_image) ? yield(:og_image) : image_url_with_protocol('logo.png'))
+  /meta property='og:url' content=(content_for?(:og_url) ? yield(:og_url) : request.url)
+  /
+  /link rel='canonical' href=(content_for?(:og_url) ? yield(:og_url) : request.url)
+  /link rel='dns-prefetch' href='//s3.amazonaws.com'
+
+  // Mobile Specific
+  meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1')
+  meta http-equiv="X-UA-Compatible" content="IE=edge"
+
+  // CSS
+  link rel="stylesheet" media="print,screen" href='//fonts.googleapis.com/css?family=Open+Sans:400,700,800|Open+Sans+Condensed:300,700'
+  link rel="stylesheet" media="print,screen" href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  link rel="stylesheet" media="print,screen" href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  /= stylesheet_link_tag 'application', media: 'print,screen'
+
+body
+  header.navbar.navbar-default
+    .container
+      .navbar-header
+
+        button.navbar-toggle.pull-left data-target=".navbar-navigation" data-toggle="collapse" type="button"
+          span.sr-only Toggle navigation
+          span.fa.fa-bars
+
+        a.navbar-brand href='/'
+          = config['SITE_NAME']
+          /img src='logo-with-text.svg' alt="#{Settings.site_name} - #{Settings.tagline}", size: '120x30'
+
+
+  /= yield :header
+
+  #content = next.body()
+
+
+
+  script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"
+  script src="static/application.js"
+  = next.javascripts()
+  script
+  //script 'application'
+
+  /- if Rails.env.production?
+    window.identity = {};
+    /javascript:
+    //  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+    //  analytics.load("SEGMENTIO_ID");
+    //  analytics.page();
+    //  if(window.identity) {
+    //    analytics.identify(window.identity.id, window.identity);
+    //  }
+    //  }}();
+    /
