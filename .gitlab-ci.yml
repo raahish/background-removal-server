@@ -6,6 +6,6 @@ deploy_to_heroku:
   services:
   - docker:dind
   script:
-    - docker login --email=_ --username=_ --password=$HEROKU_AUTH_TOKEN registry.heroku.com
-    - docker tag registry.gitlab.com/burgalon/background-removal:latest registry.heroku.com/burgalon/background-removal:latest
+    - docker login --username=_ --password=$HEROKU_AUTH_TOKEN registry.heroku.com
+#    - docker tag registry.gitlab.com/burgalon/background-removal:latest registry.heroku.com/burgalon/background-removal:latest
     - docker push registry.heroku.com/burgalon/background-removal:latest
