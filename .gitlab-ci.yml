@@ -6,7 +6,7 @@ deploy_to_heroku:
   services:
   - docker:dind
   script:
-    - apt-get install -y git-core git-lfs
+    - apk add git git-lfs --update-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/
     - git lfs pull
     - docker login --username=_ --password=$HEROKU_AUTH_TOKEN registry.heroku.com
     - docker build -t registry.heroku.com/background-removal/web .
