@@ -60,5 +60,9 @@ def predict():
         # return jsonify({'prediction': repr(prediction)})
     # return jsonify({'prediction': None})
 
+@app.route('/')
+def homepage():
+    return "Hello World!"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
