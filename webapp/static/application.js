@@ -46,7 +46,8 @@ $.ajaxTransport("+binary", function(options, originalOptions, jqXHR){
         xhr.send(data);
       },
       abort: function(){
-        jqXHR.abort();
+        console.log('aborted')
+        // jqXHR.abort();
       }
     };
   }
@@ -91,7 +92,7 @@ Upload.prototype.doUpload = function (success) {
     cache: false,
     contentType: false,
     processData: false,
-    timeout: 60000,
+    // timeout: 60000,
     dataType: "binary",
     responseType: 'arraybuffer',
   });
