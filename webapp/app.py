@@ -35,7 +35,6 @@ def rotate_by_exif(image):
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Convert image file into numpy
     image = request.files['file']
     image = Image.open(image)
     image = rotate_by_exif(image)
@@ -43,9 +42,6 @@ def predict():
 
     # Take only first 3 RGB channels and drop ALPHA 4th channel in case this is a PNG
     prediction = ml.predict(resized_image[:, :, 0:3])
-
-    # clip values instead of using argmax to be used as transparency values
-    # prediction[np.where(prediction[:, :, 0]<prediction[:, :, 1]), 1] = 0
 
     # Resize back to original image size
     prediction = imresize(prediction[:, :, 1], (image.height, image.width))
