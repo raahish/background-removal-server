@@ -1,5 +1,4 @@
-print("Starting app.py")
-import io
+import io, traceback
 
 from flask import Flask, jsonify, request
 from flask import send_file
@@ -8,7 +7,7 @@ from flask_mako import MakoTemplates, render_template
 from plim import preprocessor
 
 import ml
-from PIL import Image
+from PIL import Image, ExifTags
 from scipy.misc import imresize
 import numpy as np
 
@@ -18,29 +17,41 @@ mako = MakoTemplates(app)
 app.config['MAKO_PREPROCESSOR'] = preprocessor
 app.config.from_object('config.ProductionConfig')
 
-def compose_transparent(prediction, image):
-    # Add alpha channel
-    image = np.pad(image, (0,1), 'constant', constant_values=255)
-    # Find all foreground predicted to be non background pixels
-    foreground_indexes = np.where(prediction!=0)
-    transparent_image = np.zeros((image.shape[0], image.shape[1], 4))
-    transparent_image[foreground_indexes] = image[foreground_indexes]
-    return transparent_image
+def rotate_by_exif(image):
+    try :
+        for orientation in ExifTags.TAGS.keys() :
+            if ExifTags.TAGS[orientation]=='Orientation' : break
+        exif=dict(image._getexif().items())
+
+        if   exif[orientation] == 3 :
+            image=image.rotate(180, expand=True)
+        elif exif[orientation] == 6 :
+            image=image.rotate(270, expand=True)
+        elif exif[orientation] == 8 :
+            image=image.rotate(90, expand=True)
+        return image
+    except:
+        traceback.print_exc()
 
 @app.route('/predict', methods=['POST'])
 def predict():
     # Convert image file into numpy
     image = request.files['file']
     image = Image.open(image)
-    image = np.asarray(image).astype('float64')
-    resized_image = imresize(image, (224, 224 ,3))
+    image = rotate_by_exif(image)
+    resized_image = imresize(image, (224, 224 , -1))
 
-    # The current image from the center camera of the car
-    prediction = ml.predict(resized_image)
-    prediction = imresize(prediction, (image.shape[0], image.shape[1]))
+    # Take only first 3 RGB channels and drop ALPHA 4th channel in case this is a PNG
+    prediction = ml.predict(resized_image[:, :, 0:3])
 
-    transparent_image = compose_transparent(prediction, image)
-    transparent_image = Image.fromarray(np.uint8(transparent_image))
+    # clip values instead of using argmax to be used as transparency values
+    # prediction[np.where(prediction[:, :, 0]<prediction[:, :, 1]), 1] = 0
+
+    # Resize back to original image size
+    prediction = imresize(prediction[:, :, 1], (image.height, image.width))
+
+    transparent_image = np.append(image, prediction[: , :, None], axis=-1)
+    transparent_image = Image.fromarray(transparent_image)
 
 
     byte_io = io.BytesIO()

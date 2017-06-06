@@ -10,13 +10,9 @@ graph = tf.get_default_graph()
 
 
 def predict(image):
-    # image-=0.4
-    # image/=0.3
-
     with graph.as_default():
-        prediction = model.predict(image[None, :, :, :], batch_size=1)
-
-    prediction = np.argmax(prediction, axis=-1)
-    prediction = prediction.reshape((224,224))
+        prediction = model.predict(image[None, :, :, :])
+    prediction = prediction.reshape((224,224, -1))
     return prediction
+
 

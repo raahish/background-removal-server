@@ -111,18 +111,50 @@ Upload.prototype.progressHandling = function (event) {
   $(progress_bar_id + " .status").text(percent + "%");
 };
 
+function fixExifOrientation($img) {
+  EXIF.getData($img[0], function() {
+    // console.log('Exif=', EXIF.getTag(this, "Orientation"));
+    switch(parseInt(EXIF.getTag(this, "Orientation"))) {
+      case 2:
+        $img.addClass('flip'); break;
+      case 3:
+        $img.addClass('rotate-180'); break;
+      case 4:
+        $img.addClass('flip-and-rotate-180'); break;
+      case 5:
+        $img.addClass('flip-and-rotate-270'); break;
+      case 6:
+        $img.addClass('rotate-90'); break;
+      case 7:
+        $img.addClass('flip-and-rotate-90'); break;
+      case 8:
+        $img.addClass('rotate-270'); break;
+    }
+  });
+}
+
+$('.another').click(function() {
+  $('.results, #img-form').toggleClass('hidden');
+})
 $('#img-form-img').change(function() {
   var input = this;
-  $('#preview, #img-form').toggleClass('hidden');
+  $('.results, #img-form').toggleClass('hidden');
   var reader = new FileReader();
   reader.onload = function (e) {
-    $('#preview').attr('src', e.target.result);
+    var $preview = $('#preview');
+    $preview.attr('src', e.target.result);
+    setTimeout(function() {
+      fixExifOrientation($preview);
+      var rect = $preview[0].getBoundingClientRect();
+      // $preview.css({height: rect.height, width: rect.width})
+    }, 0);
     var upload = new Upload(input.files[0]);
     upload.doUpload(function(response) {
       window.response = response;
       var blb = new Blob([response], {type: 'image/png'});
       var url = window.url = (window.URL || window.webkitURL).createObjectURL(blb);
-      $('#preview')[0].src = url;
+      $preview[0].src = url;
+      $preview.removeClass();
     });
   };
   reader.readAsDataURL(input.files[0]);
