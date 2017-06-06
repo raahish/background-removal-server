@@ -1,8 +1,7 @@
 from keras.models import load_model
-import numpy as np
 import tensorflow as tf
 
-model = load_model('tiramisu_2_classes_with_weights.h5')
+model = load_model('./model/tiramisu_2_classes_with_weights.h5')
 graph = tf.get_default_graph()
 
 
