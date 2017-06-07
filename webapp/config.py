@@ -1,5 +1,5 @@
 class Config(object):
-    SITE_NAME='Background Removal'
+    SITE_NAME='GreenScreen'
     SITE_SLUG_NAME='background-removal'
     SITE_LOCATION='Outer space'
     TAGLINE='cut your images with AI'
