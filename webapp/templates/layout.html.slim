@@ -21,20 +21,9 @@ head
   /= stylesheet_link_tag 'application', media: 'print,screen'
 
 body
-  /header.navbar.navbar-default
-    .container
-      .navbar-header
-
-        button.navbar-toggle.pull-left data-target=".navbar-navigation" data-toggle="collapse" type="button"
-          span.sr-only Toggle navigation
-          span.fa.fa-bars
-
-        a.navbar-brand href='/'
-          img src='static/logo-with-text.svg' alt=("%s - %s" % (config['SITE_NAME'], config['TAGLINE'])) width=60 height=30
-
   .text-center
-    img src='static/logo-with-text.svg' alt=("%s - %s" % (config['SITE_NAME'], config['TAGLINE'])) width="50%"
-  /= yield :header
+    a href='/'
+      img src='static/logo-with-text.svg' alt=("%s - %s" % (config['SITE_NAME'], config['TAGLINE'])) width="50%"
 
   #content = next.body()
 
@@ -45,17 +34,3 @@ body
   script src="static/dropzone.js"
   script src="static/application.js"
   = next.javascripts()
-  script
-  //script 'application'
-
-  /- if Rails.env.production?
-    window.identity = {};
-    /javascript:
-    //  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invokefd)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
-    //  analytics.load("SEGMENTIO_ID");
-    //  analytics.page();
-    //  if(window.identity) {
-    //    analytics.identify(window.identity.id, window.identity);
-    //  }
-    //  }}();
-    /
