@@ -1390,7 +1390,7 @@
           if (xhr.readyState !== 4) {
             return;
           }
-          if(xhr.responseType!='arraybuffer') {
+          if(xhr.responseType!='arraybuffer' && xhr.responseType!='blob') {
             response = xhr.responseText;
             if (xhr.getResponseHeader("content-type") && ~xhr.getResponseHeader("content-type").indexOf("application/json")) {
               try {
