@@ -35,21 +35,26 @@ def rotate_by_exif(image):
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    # Load image
     image = request.files['file']
     image = Image.open(image)
     image = rotate_by_exif(image)
     resized_image = imresize(image, (224, 224 , -1))
 
-    # Take only first 3 RGB channels and drop ALPHA 4th channel in case this is a PNG
+    # Model input shape = (224,224,3)
+    # [0:3] - Take only the first 3 RGB channels and drop ALPHA 4th channel in case this is a PNG
     prediction = ml.predict(resized_image[:, :, 0:3])
 
     # Resize back to original image size
+    # [:, :, 1] = Take predicted class 1 - currently in our model = Person class. Class 0 = Background
     prediction = imresize(prediction[:, :, 1], (image.height, image.width))
 
+    # Append transparency 4th channel to the 3 RGV image channels.
     transparent_image = np.append(image, prediction[: , :, None], axis=-1)
     transparent_image = Image.fromarray(transparent_image)
 
 
+    # Send back the result image to the client
     byte_io = io.BytesIO()
     transparent_image.save(byte_io, 'PNG')
     byte_io.seek(0)
