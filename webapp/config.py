@@ -2,8 +2,8 @@ class Config(object):
     SITE_NAME='GreenScreen'
     SITE_SLUG_NAME='background-removal'
     SITE_LOCATION='Outer space'
-    TAGLINE='cut your images with AI'
-    TAGLINES=['Background Removal with deep Learning']
+    TAGLINE='Cut your images with AI'
+    TAGLINES=['Background Removal using Deep Learning']
     SITE_DESCRIPTION='Background removal'
     SITE_KEYWORDS='background removal, depp learning'
     GOOGLE_SITE_VERIFICATION=' X'
