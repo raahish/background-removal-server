@@ -6,20 +6,6 @@ doctype html
 head
   meta charset='utf-8'
   title= "%s - %s" % (config['SITE_NAME'], config['TAGLINE'])
-  /meta name='description' content=(content_for?(:description) ? yield(:description) : Settings.site_description)
-  /meta name='keywords' content=(content_for?(:keywords) ? yield(:keywords) : Settings.site_keywords)
-
-  /meta name='google-site-verification' content=Settings.google_site_verification
-
-  /meta property='fb:app_id' content=Settings.facebook_app_id
-  /meta property='og:site_name' content=Settings.site_name
-  /meta property='og:title' content=(content_for?(:og_title) ? yield(:og_title) : "#{Settings.site_name} - #{Settings.tagline}")
-  /meta property='og:description' content=(content_for?(:description) ? yield(:description) : Settings.site_description)
-  /meta property='og:image' content=(content_for?(:og_image) ? yield(:og_image) : image_url_with_protocol('logo.png'))
-  /meta property='og:url' content=(content_for?(:og_url) ? yield(:og_url) : request.url)
-  /
-  /link rel='canonical' href=(content_for?(:og_url) ? yield(:og_url) : request.url)
-  /link rel='dns-prefetch' href='//s3.amazonaws.com'
 
   // Mobile Specific
   meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1')
@@ -28,12 +14,12 @@ head
   // CSS
   link rel="stylesheet" media="print,screen" href='//fonts.googleapis.com/css?family=Open+Sans:400,700,800|Open+Sans+Condensed:300,700'
   link rel="stylesheet" media="print,screen" href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
-  link rel="stylesheet" media="print,screen" href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+  link rel="stylesheet" media="print,screen" href='static/dropzone.css'
   link rel="stylesheet" media="print,screen" href='static/application.css'
   /= stylesheet_link_tag 'application', media: 'print,screen'
 
 body
-  header.navbar.navbar-default
+  /header.navbar.navbar-default
     .container
       .navbar-header
 
@@ -42,10 +28,10 @@ body
           span.fa.fa-bars
 
         a.navbar-brand href='/'
-          = config['SITE_NAME']
-          /img src='logo-with-text.svg' alt="#{Settings.site_name} - #{Settings.tagline}", size: '120x30'
+          img src='static/logo-with-text.svg' alt=("%s - %s" % (config['SITE_NAME'], config['TAGLINE'])) width=60 height=30
 
-
+  .text-center
+    img src='static/logo-with-text.svg' alt=("%s - %s" % (config['SITE_NAME'], config['TAGLINE'])) width="50%"
   /= yield :header
 
   #content = next.body()
@@ -54,6 +40,7 @@ body
 
   script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"
   script src="static/exif.js"
+  script src="static/dropzone.js"
   script src="static/application.js"
   = next.javascripts()
   script

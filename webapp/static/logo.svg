@@ -1,15 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="1024px" height="1024px" viewBox="1547 227 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
-    <title>icon</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
-        <g id="icon" stroke-width="250">
-            <g id="Group" transform="translate(384.000000, 309.000000)">
-                <path d="M0.5,300.614943 L255.5,406.385057" id="Line" stroke="#F7541C"></path>
-                <path d="M0.5,0.614942529 L255.5,106.385057" id="Line" stroke="#063641"></path>
-            </g>
-        </g>
+    <g id="logo-copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(1547.000000, 227.000000)">
+        <rect id="Rectangle" fill="#B8E986" x="198" y="192" width="628" height="628"></rect>
+        <polygon id="V" fill="#000000" transform="translate(521.655462, 508.000000) rotate(-180.000000) translate(-521.655462, -508.000000) " points="596.857143 822 805.310924 194 662.823529 194 521.215686 635.535014 519.456583 635.535014 379.607843 194 238 194 441.176471 822"></polygon>
     </g>
 </svg>
