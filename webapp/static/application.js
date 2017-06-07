@@ -6,6 +6,7 @@ var dropzone = new Dropzone('form', {
   thumbnailWidth: 120,
   maxFilesize: 3,
   filesizeBase: 1000,
+  resizeWidth: 1280,
   sending: function(file, xhr) {
     xhr.responseType = 'arraybuffer';
     xhr.responseText = null
