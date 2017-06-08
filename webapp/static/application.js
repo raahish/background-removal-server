@@ -27,11 +27,11 @@ var dropzone = new Dropzone('form', {
 });
 
 dropzone.on("error", function(file) {
-  $('.alert-danger.hidden')
+  var alert = $('.alert-danger.hidden')
     .clone()
-    .appendTo('.results')
     .removeClass('hidden')
     .append(file.name)
+  $('.results').prepend(alert);
 });
 
 dropzone.on("success", function(file) {

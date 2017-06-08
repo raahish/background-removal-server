@@ -35,6 +35,8 @@ def rotate_by_exif(image):
         for orientation in ExifTags.TAGS.keys() :
             if ExifTags.TAGS[orientation]=='Orientation' : break
         exif=dict(image._getexif().items())
+        if not orientation in exif:
+            return image
 
         if   exif[orientation] == 3 :
             image=image.rotate(180, expand=True)
