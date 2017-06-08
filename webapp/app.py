@@ -1,21 +1,34 @@
 import io, traceback
 
-from flask import Flask, jsonify, request
+from flask import Flask, request, g
 from flask import send_file
-
 from flask_mako import MakoTemplates, render_template
 from plim import preprocessor
 
-import ml
 from PIL import Image, ExifTags
 from scipy.misc import imresize
 import numpy as np
+from keras.models import load_model
+import tensorflow as tf
 
 app = Flask(__name__, instance_relative_config=True)
 # For Plim templates
 mako = MakoTemplates(app)
 app.config['MAKO_PREPROCESSOR'] = preprocessor
 app.config.from_object('config.ProductionConfig')
+
+
+# Preload our model
+print("Loading model")
+model = load_model('./model/tiramisu_2_classes_with_weights.h5')
+graph = tf.get_default_graph()
+
+
+def ml_predict(image):
+    with graph.as_default():
+        prediction = model.predict(image[None, :, :, :])
+    prediction = prediction.reshape((224,224, -1))
+    return prediction
 
 def rotate_by_exif(image):
     try :
@@ -39,11 +52,12 @@ def predict():
     image = request.files['file']
     image = Image.open(image)
     image = rotate_by_exif(image)
-    resized_image = imresize(image, (224, 224 , -1))
+    print()
+    resized_image = imresize(image, (224, 224))
 
     # Model input shape = (224,224,3)
     # [0:3] - Take only the first 3 RGB channels and drop ALPHA 4th channel in case this is a PNG
-    prediction = ml.predict(resized_image[:, :, 0:3])
+    prediction = ml_predict(resized_image[:, :, 0:3])
 
     # Resize back to original image size
     # [:, :, 1] = Take predicted class 1 - currently in our model = Person class. Class 0 = Background

@@ -1,7 +1,7 @@
 Dropzone.autoDiscover = false;
 var dropzone = new Dropzone('form', {
   previewTemplate: document.querySelector('#preview-template').innerHTML,
-  parallelUploads: 1,
+  parallelUploads: 2,
   thumbnailHeight: 120,
   thumbnailWidth: 120,
   maxFilesize: 3,
@@ -39,6 +39,6 @@ dropzone.on("success", function(file) {
   var url = window.url = (window.URL || window.webkitURL).createObjectURL(blb);
   var img = new Image();
   img.src = url;
-  $('.results').append(img)
+  $('.results').prepend(img)
 
 });
