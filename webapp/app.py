@@ -23,9 +23,9 @@ print("Loading model")
 model = load_model('./model/tiramisu_2_classes_with_weights.h5')
 graph = tf.get_default_graph()
 
-
 def ml_predict(image):
     with graph.as_default():
+        # Add a dimension for the batch
         prediction = model.predict(image[None, :, :, :])
     prediction = prediction.reshape((224,224, -1))
     return prediction
@@ -45,6 +45,7 @@ def rotate_by_exif(image):
         return image
     except:
         traceback.print_exc()
+        return image
 
 @app.route('/predict', methods=['POST'])
 def predict():
