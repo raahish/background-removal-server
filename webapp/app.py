@@ -55,7 +55,6 @@ def predict():
     image = request.files['file']
     image = Image.open(image)
     image = rotate_by_exif(image)
-    print()
     resized_image = imresize(image, (224, 224))
 
     # Model input shape = (224,224,3)
