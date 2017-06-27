@@ -49,6 +49,7 @@ def rotate_by_exif(image):
         traceback.print_exc()
         return image
 
+THRESHOLD = 0.5
 @app.route('/predict', methods=['POST'])
 def predict():
     # Load image
@@ -64,9 +65,11 @@ def predict():
     # Resize back to original image size
     # [:, :, 1] = Take predicted class 1 - currently in our model = Person class. Class 0 = Background
     prediction = imresize(prediction[:, :, 1], (image.height, image.width))
+    prediction[prediction>THRESHOLD*255] = 255
+    prediction[prediction<THRESHOLD*255] = 0
 
-    # Append transparency 4th channel to the 3 RGV image channels.
-    transparent_image = np.append(image, prediction[: , :, None], axis=-1)
+    # Append transparency 4th channel to the 3 RGB image channels.
+    transparent_image = np.append(np.array(image)[:, :, 0:3], prediction[: , :, None], axis=-1)
     transparent_image = Image.fromarray(transparent_image)
 
 
