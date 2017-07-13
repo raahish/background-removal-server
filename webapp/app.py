@@ -20,7 +20,7 @@ app.config.from_object('config.ProductionConfig')
 
 # Preload our model
 print("Loading model")
-model = load_model('./model/tiramisu_2_classes_with_weights.h5')
+model = load_model('./model/tiramisu_2_classes_with_weights.h5', compile=False)
 graph = tf.get_default_graph()
 
 def ml_predict(image):
