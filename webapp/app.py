@@ -60,7 +60,7 @@ def predict():
 
     # Model input shape = (224,224,3)
     # [0:3] - Take only the first 3 RGB channels and drop ALPHA 4th channel in case this is a PNG
-    prediction = ml_predict(resized_image[:, :, 0:3])
+    prediction = ml_predict(resized_image[:, :, 0:3]/255)
 
     # Resize back to original image size
     # [:, :, 1] = Take predicted class 1 - currently in our model = Person class. Class 0 = Background
