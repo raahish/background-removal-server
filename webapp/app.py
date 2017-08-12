@@ -20,13 +20,13 @@ app.config.from_object('config.ProductionConfig')
 
 # Preload our model
 print("Loading model")
-model = load_model('./model/tiramisu_2_classes_with_weights.h5', compile=False)
+model = load_model('./model/model_from_9.8.hdf5', compile=False)
 graph = tf.get_default_graph()
 
 def ml_predict(image):
     with graph.as_default():
         # Add a dimension for the batch
-        prediction = model.predict(image[None, :, :, :])
+        prediction = model.predict(image[None, :, :, :]/255)
     prediction = prediction.reshape((224,224, -1))
     return prediction
 
