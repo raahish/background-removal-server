@@ -26,7 +26,7 @@ graph = tf.get_default_graph()
 def ml_predict(image):
     with graph.as_default():
         # Add a dimension for the batch
-        prediction = model.predict(image[None, :, :, :]/255)
+        prediction = model.predict(image[None, :, :, :])
     prediction = prediction.reshape((224,224, -1))
     return prediction
 
