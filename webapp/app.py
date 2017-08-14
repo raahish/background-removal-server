@@ -20,7 +20,7 @@ app.config.from_object('config.ProductionConfig')
 
 # Preload our model
 print("Loading model")
-model = load_model('./model/model_from_9.8.hdf5', compile=False)
+model = load_model('./model/main_model.hdf5', compile=False)
 graph = tf.get_default_graph()
 
 def ml_predict(image):
