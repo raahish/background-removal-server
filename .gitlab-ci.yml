@@ -20,7 +20,7 @@ deploy_to_heroku:
     # Push docker image to Heroku registry to serve
     - docker push registry.heroku.com/background-removal/web
     ### Push to Gitlab registry
-    - docker login registry.gitlab.com
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker build -t registry.gitlab.com/fast-science/background-removal-server .
     - docker push registry.gitlab.com/fast-science/background-removal-server
 
