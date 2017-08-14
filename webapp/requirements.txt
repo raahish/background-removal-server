@@ -10,3 +10,4 @@ pillow
 h5py
 Plim
 flask_mako
+futures
