@@ -25,6 +25,18 @@ body
     a href='/'
       img src='static/logo-with-text.svg' alt=("%s - %s" % (config['SITE_NAME'], config['TAGLINE'])) width="50%"
 
+  .navbar.navbar-inverse.navbar-static-top
+    .container
+      ul.nav.navbar-nav
+        li
+          a.navbar-link href="mailto:greenscreen@boorgle.com" target="_blank" Contact us
+        li
+          a.navbar-link href="https://medium.com/p/35648f9dc5fb"  Deployment Blog Post
+        li
+          a.navbar-link href="https://towardsdatascience.com/background-removal-with-deep-learning-c4f2104b3157"  Model blog post
+        li
+          a.navbar-link href="https://greenscreen-ai-client.boorgle.com/"  Client side solution
+
   #content = next.body()
 
 
